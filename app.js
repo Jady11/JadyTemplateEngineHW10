@@ -54,7 +54,7 @@ function appMenu() {
                 if (pass) {
                     return true;
                 }
-                return "Please enter an Email Address",
+                return "Please enter an Email Address";
             }
         },
         {
@@ -68,11 +68,11 @@ function appMenu() {
                 if (pass) {
                     return true;
                 }
-                return "Please enter a positive number, 1-9",
+                return "Please enter a positive number, 1-9";
             }
         }
     ]).then(answers => {
-        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber),
+        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
         teamMembers.push(manager);
         idArray.push(answers.managerId);
         createTeam();
@@ -116,7 +116,7 @@ function addEngineer() {
                 if (answer !== "") {
                     return true;
                 }
-                return "Please enter at least one character.",
+                return "Please enter at least one character.";
             }
         },
         {
@@ -200,7 +200,7 @@ function addIntern() {
                 }
 
             }
-            return "Please enter a positive number, 1-9."
+            return "Please enter a positive number, 1-9.";
         }
     },
     {
