@@ -45,16 +45,16 @@ function appMenu() {
         },
         {
             type: "input",
-            name: "managersEmail",
+            name: "managerEmail",
             message: "What is your manager's Email?",
             validate: answer => {
                 const pass = answer.match(
-                    /\$+@\+\.\$+/
+                    /\5+@\5+\.\5+/
                 );
                 if (pass) {
                     return true;
                 }
-                return "Please enter an email address",
+                return "Please enter an Email Address",
             }
         },
         {
@@ -66,20 +66,194 @@ function appMenu() {
                     /^[1-9]d*$/
                 );
                 if (pass) {
-                    return true:
+                    return true;
                 }
                 return "Please enter a positive number, 1-9",
             }
         }
     ]).then(answers => {
-        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answer.managerOfficeNumber),
+        const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber),
         teamMembers.push(manager);
         idArray.push(answers.managerId);
         createTeam();
     });
-    }
-    
 }
+
+function createTeam() {
+
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "memberChoice",
+            message: "Which type of team member would you like to add?",
+            choices: [
+                "Engineer",
+                "Intern",
+                "I don't want to add any more team members"
+            ]
+        }
+    ]).then(userChoice => {
+        switch(userChoice.memberChoice) {
+            case "Engineer":
+                addEngineer();
+                break;
+            case "Intern":
+                addIntern();
+                break;
+            default:
+                buildTeam();
+            }
+    }); 
+}
+
+function addEngineer() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is your Engineer's name?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.",
+            }
+        },
+        {
+            type: "input",
+            name: "engineerId",
+            message: "What is your Engineer's ID?",
+            validate: answer => {
+                const pass = answer.match(
+                    /^[1-9]\d*$/
+                );
+                if (pass) {
+                    if (idArray.includes(answer)) {
+                        return "This ID is already taken, Please enter a different number.";
+                    } else {
+                        return true;
+                    }
+
+                }
+                return "Please enter a positive number, 1-9.";
+            }
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is your Manager's Email?",
+            validate: answer => {
+                const pass = answer.match(
+                    /\5+@\5+\.\5+/
+                );
+                if (pass) {
+                    return true;
+                }
+                return "Please enter an Email Address.";
+            }
+        },
+        {
+            type: "input",
+            name: "engineerGithub",
+            message: "What is your Engineer's Github username?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "Please enter at least one character";
+            }
+        }
+    ]).then(answers => {
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        teamMembers.push(engineer);
+        idArray.push(answers.engineerId);
+        createTeam();
+    });
+}
+
+function addIntern() {
+    inquirer.prompt([
+        {
+            type: "input", 
+            name: "internName",
+            message: "What is your Interns name?",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                return "Please enter at least one character.";
+            }
+        },
+        {
+        type: "input",
+        name: "internId",
+        message: "What is your Intern's ID?",
+        validate: answer => {
+            const pass = answer.match(
+                /^[1-9]\d*$/
+            );
+            if (pass) {
+                if (idArray.includes(answer)) {
+                    return "This is already taken.  Please enter a different number.";
+                } else {
+                    return true;
+                }
+
+            }
+            return "Please enter a positive number, 1-9."
+        }
+    },
+    {
+        type: "input",
+        name: "internEmail",
+        message: "What is your Intern's Email?",
+        validate: answer => {
+            const pass = answer.match(
+                /\5+@\5+\.\5+/
+            );
+            if (pass) {
+                return true;
+            }
+            return "Please enter a valid Email Address.";
+        }
+    },
+    {
+        type: "input",
+        name: "internSchool",
+        message: "What is the name of your Intern's school?",
+        validate: answer => {
+            if (answer !== "") {
+                return true;
+            }
+            return "Please enter at least one character.";
+        }
+    }
+    ]).then(answers => {
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+        teamMembers.push(intern);
+        idArray.push(answers.internId);
+        createTeam();
+    });
+}
+
+function buildTeam() {
+    
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+}
+
+createManager();
+
+}
+
+
+
+
+
+    
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
