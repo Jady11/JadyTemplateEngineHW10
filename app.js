@@ -35,12 +35,12 @@ function appMenu() {
             massage: "What is your manager's ID?",
             validate: answer => {
                 const pass = answer.match(
-                    /^[1-9]\*$/
+                    /[1-9]/
                     );
                     if (pass) {
                         return true;
                     }
-                    return "Please enter a positive number, 1-9";
+                    // return "Please enter a positive number, 1-9";
             }
         },
         {
@@ -49,12 +49,12 @@ function appMenu() {
             message: "What is your manager's Email?",
             validate: answer => {
                 const pass = answer.match(
-                    /\5+@\5+\.\5+/
+                    /[a-z1-9]/
                 );
                 if (pass) {
                     return true;
-                }
-                return "Please enter an Email Address";
+                } 
+                // return "Please enter an Email Address";
             }
         },
         {
@@ -63,7 +63,7 @@ function appMenu() {
             message: "What is your manager's Office Number?",
             validate: answer => {
                 const pass = answer.match(
-                    /^[1-9]d*$/
+                    /[1-9]/
                 );
                 if (pass) {
                     return true;
@@ -125,7 +125,7 @@ function addEngineer() {
             message: "What is your Engineer's ID?",
             validate: answer => {
                 const pass = answer.match(
-                    /^[1-9]\d*$/
+                    /[1-9]/
                 );
                 if (pass) {
                     if (idArray.includes(answer)) {
@@ -135,7 +135,7 @@ function addEngineer() {
                     }
 
                 }
-                return "Please enter a positive number, 1-9.";
+                // return "Please enter a positive number, 1-9.";
             }
         },
         {
@@ -144,7 +144,7 @@ function addEngineer() {
             message: "What is your Manager's Email?",
             validate: answer => {
                 const pass = answer.match(
-                    /\5+@\5+\.\5+/
+                    /[a-z1-9]/
                 );
                 if (pass) {
                     return true;
@@ -190,7 +190,7 @@ function addIntern() {
         message: "What is your Intern's ID?",
         validate: answer => {
             const pass = answer.match(
-                /^[1-9]\d*$/
+                /[1-9]/
             );
             if (pass) {
                 if (idArray.includes(answer)) {
@@ -209,7 +209,7 @@ function addIntern() {
         message: "What is your Intern's Email?",
         validate: answer => {
             const pass = answer.match(
-                /\5+@\5+\.\5+/
+                /[a-z1-9]/
             );
             if (pass) {
                 return true;
@@ -249,7 +249,7 @@ createManager();
 }
 
 
-
+appMenu();
 
 
     
